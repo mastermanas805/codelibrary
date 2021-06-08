@@ -1,0 +1,7 @@
+# Graph Data Structure
+
+Mathematical graphs can be represented in data structure. We can represent a graph using an array of vertices and a two-dimensional array of edges.
+
+## Theory Related
+
+1. (BFS)[./notes/BFS.md]
