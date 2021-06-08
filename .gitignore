@@ -1,0 +1,17 @@
+# Ignore all
+*
+# Unignore all with extensions
+!*.*
+# Unignore all dirs
+!*/
+#Ignogre .vscode
+Graph/.vscode
+# Ignore files with extension `.class` & `.sm`
+*.class
+*.sm
+# Ignore `bin` dir
+*/bin/*
+#Ignore Executables
+**/*
+!**/
+!**/*.*
