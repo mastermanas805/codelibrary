@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
-#include "graph.h"
+#include "../headers/graph.h" 
+
 using namespace std;
 
 class dfsiterative: public graph
