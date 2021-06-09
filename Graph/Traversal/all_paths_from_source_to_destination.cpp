@@ -7,7 +7,8 @@ public:
     vector <vector <int> > res;
     vector <int> temp;
     
-    void dfs(vector<vector<int>>& graph,int curr=0){
+    void dfs(vector<vector<int>>& graph,int curr=0)
+    {
         temp.push_back(curr);
         if (curr==target)
             res.push_back(temp);
