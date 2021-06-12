@@ -15,6 +15,7 @@ Output: [2,3]
 ```
 
 **Example 2**
+
 ![](https://assets.leetcode.com/uploads/2021/05/02/reduntant1-2-graph.jpg)
 ```
 Input: edges = [[1,2],[2,3],[3,4],[1,4],[1,5]]
