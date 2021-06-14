@@ -6,4 +6,4 @@ Mathematical graphs can be represented in data structure. We can represent a gra
 
 1. [BFS](./notes/BFS.md)
 2. [DFS](./notes/DFS.md)
-3. [Traversal Related Problems](./Travaersal/)
+3. [Traversal Related Problems](./Travaersal)
