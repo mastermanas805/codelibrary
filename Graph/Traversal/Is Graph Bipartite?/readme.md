@@ -13,6 +13,7 @@ A graph is bipartite if the nodes can be partitioned into two independent sets A
 Return true if and only if it is bipartite.
 
 **Example 1:**
+
 ![](https://assets.leetcode.com/uploads/2020/10/21/bi2.jpg)
 
 ```
@@ -22,6 +23,7 @@ Explanation: There is no way to partition the nodes into two independent sets su
 ```
 
 **Example 2**
+
 ![](https://assets.leetcode.com/uploads/2020/10/21/bi1.jpg)
 
 ```
