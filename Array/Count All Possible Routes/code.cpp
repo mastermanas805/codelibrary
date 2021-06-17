@@ -2,28 +2,41 @@
 #define mod 1000000007;
 using namespace std;
 
+
 class Solution {
 public:
     int dp[100][201];
-    int res=0;
-    int ans=0;
-    int sol(vector<int>& loc, int start, int fin, int fuel){
-        if(fuel<0)return 0;
-        if(dp[start][fuel]!=-1)return dp[start][fuel];
-        int ans=0;
-        if(start==fin){ans++;}
-        for(int i=0;i<loc.size();i++){
-            if(i==start)continue;
-            int fuel_left=fuel-abs(loc[start]-loc[i]);
-            int temp=sol(loc,i,fin,fuel_left);
-            ans=(ans+temp)%mod;
-        }
-            return dp[start][fuel]=ans;;
-        
-    }
-    int countRoutes(vector<int>& locations, int start, int finish, int fuel) {
+    
+    
+    Solution()
+    {
         memset(dp,-1,sizeof dp);
-    return sol(locations,start,finish,fuel);
+    }
+    
+    
+    int countRoutes(vector<int>& locations, int start, int finish, int fuel) {
+        
+        if(fuel<0)
+            return 0;
+        
+        if(dp[start][fuel] !=-1)
+            return dp[start][fuel];
+        int ans = 0;
+        
+        if(start == finish)
+            ans++;
+        
+        for(int i=0;i<locations.size();i++)
+        {
+            if(i == start)
+                continue;
+            
+            int fuel_left = fuel - abs(locations[start] - locations[i]);
+            int temp = countRoutes(locations, i, finish, fuel_left);
+            ans = (ans + temp)%m;
+        }
+        
+        return dp[start][fuel] = ans;
     }
 };
 
