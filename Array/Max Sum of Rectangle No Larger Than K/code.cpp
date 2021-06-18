@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
+
 class Solution {
 public:
     int maxSumSubmatrix(vector<vector<int>>& matrix, int k) {
@@ -23,6 +24,9 @@ public:
                     if(s <= k)
                         res = max(res, s);
                 }
+                
+                if(res == k)
+                    return k;
             }
         }
         return res;
