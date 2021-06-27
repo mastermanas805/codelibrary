@@ -97,10 +97,9 @@ We should sleep only if, it reduces our remaining sleep units that is we should 
 =>x>H/2
 ```
 
-So iterate over the given string SSS, find countcountcount of continuous 0s0s0s, check if count>H/2count > H/2count>H/2, if yes then sleep for this time and update the HHH as following:
-H=2∗(H−count)H = 2*(H-count)H=2∗(H−count)
+So iterate over the given string SSS, find countcountcount of continuous 0s0s0s, check if count>H/2, if yes then sleep for this time and update the HHH as following: H=2∗(H−count)
 
 If at any point we have H<=0H <= 0H<=0 then we are able to achieve the requirement otherwise no.
 TIME COMPLEXITY:
 
-O(L)O(L)O(L) per test case
+O(L) per test case
