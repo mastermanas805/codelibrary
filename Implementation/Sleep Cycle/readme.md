@@ -76,10 +76,10 @@ Chef needs 5 units of sleep. If he spends the first 4 units of time, he still ne
 
 ## EXPLANATION
 
-As we know that if we sleep x(<H)x(<H)x(<H) units then we need to sleep 2∗(H−x)2*(H-x)2∗(H−x) units more next time.
+As we know that if we sleep x(<H) units then we need to sleep 2∗(H−x) units more next time.
 
-So when we have some x(<H)x(<H)x(<H) units of free time available then should us sleep or not?
-We should sleep only if, it reduces our remaining sleep units that is we should sleep xxx units only if 
+So when we have some x(<H) units of free time available then should us sleep or not?
+We should sleep only if, it reduces our remaining sleep units that is we should sleep x units only if 
 
 ```math
 2∗(H−x)<H.
@@ -97,7 +97,7 @@ We should sleep only if, it reduces our remaining sleep units that is we should 
 =>x>H/2
 ```
 
-So iterate over the given string SSS, find countcountcount of continuous 0s0s0s, check if count>H/2, if yes then sleep for this time and update the HHH as following: H=2∗(H−count)
+So iterate over the given string S, find countcountcount of continuous 0s, check if count>H/2, if yes then sleep for this time and update the H as following: H=2∗(H−count)
 
 If at any point we have H<=0H <= 0H<=0 then we are able to achieve the requirement otherwise no.
 TIME COMPLEXITY:
