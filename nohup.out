@@ -1,2 +1,0 @@
-/usr/bin/atom: line 190:   972 Segmentation fault      nohup "$ATOM_PATH" --executed-from="$(pwd)" --pid=$$ "$@" > "$ATOM_HOME/nohup.out" 2>&1
-/usr/bin/atom: line 190:  1672 Segmentation fault      nohup "$ATOM_PATH" --executed-from="$(pwd)" --pid=$$ "$@" > "$ATOM_HOME/nohup.out" 2>&1
