@@ -12,10 +12,10 @@ class node
 {
 public:
     int val;
-    bool type;
+    int type;
     char name;
     node *left,*right,*root;
-    node(int n,node *r=NULL,node *rt = NULL, bool t = false, char s = '0')
+    node(int n,node *r=NULL,node *rt = NULL, int t = 0, char s = '0')
     {
         val = n;
         right=r;
@@ -60,12 +60,15 @@ class adaptive_huffman
 
     void gen_tree();
     void update_value(node *src);
-    void print(node *src);
+    void print_encoding();
     public:
-    string s;
+    string s, *encode;
     int flag[26] = {0};
     node *root;
     vector<int> queue;
+    string nytflag[26];
+    string inttobinart(int n);
+    string nytstring(node*, string);
     
 
     adaptive_huffman(string s)
@@ -73,7 +76,7 @@ class adaptive_huffman
         this->s = s;
         this->root = new node(0);
         this->gen_tree();
-        this->print(this->root);
+        this->print_encoding();
     }
 };
 
@@ -85,11 +88,14 @@ void adaptive_huffman::gen_tree()
     {
         if(flag[i-'a'] == 0)
           {
+                  this->nytflag[i-'a'] = this->nytstring(this->root, "");
+                  this->flag[i-'a'] = 1;
+                  curr->type = 2;
                   curr->left = new node(0, NULL, curr, 0);
-                  curr->right = new node(1, NULL, curr, true, i);
+                  curr->right = new node(1, NULL, curr, 1, i);
                   this->update_value(curr);
-                  curr = !curr->left->type? curr->left: curr->right;
-                  flag[i-'a'] = 1;
+                  curr = curr->left->type != 1? curr->left: curr->right;
+                  
           }
         else
          {
@@ -100,26 +106,37 @@ void adaptive_huffman::gen_tree()
     }
 }
 
-void adaptive_huffman::print(node* src)
+void adaptive_huffman::print_encoding()
 {
-    if(src == NULL)
-       return;
+    string s = this->s;
+    bool flag[26] = {0};
+    int e =4, r =10;
 
-    if(src->type)
+    for(auto i: s)
     {
-        cout<<src->name<<"   ";
-        for(auto i:queue)
-            cout<<i;
-        cout<<endl;
+        if(!flag[i-'a'])
+        {
+            flag[i-'a'] = 1;
+            if((i-'a'+1) >= 1 && (i-'a'+1) <= 2*r)
+            {
+                string x = inttobinart(i-'a');
+                while(x.length() < e+1) x = "0" + x;
+                cout<<i<<"\t"<<this->nytflag[i-'a']+x<<endl;
+            }
+
+            else if((i - 'a' + 1)> 2*r)
+            {
+                string x = inttobinart(i-'a' - r );
+                while(x.length() < e) x = "0" + x;
+                cout<<i<<"\t"<<this->nytflag[i-'a']+x<<endl;
+            }
+        }
+
+        else
+        {
+            cout<<i<<"\t"<<((this->nytflag[i-'a'] == "")?"1":this->nytflag[i-'a'])<<endl;
+        }
     }
-
-    queue.push_back(0);
-    this->print(src->left);
-    queue.pop_back();
-    queue.push_back(1);
-    this->print(src->right);
-    queue.pop_back();
-
 }
 
 
@@ -129,7 +146,7 @@ void::adaptive_huffman:: update_value(node *src)
         return;
     
     src->val++;
-    if(!src->type && src->left->val > src->right->val)
+    if(src->type == 2 && src->left->val > src->right->val)
      {
          node *temp = src->left;
          src->left = src->right;
@@ -139,7 +156,34 @@ void::adaptive_huffman:: update_value(node *src)
 }
 
 
+string adaptive_huffman:: nytstring(node* src,string s = "")
+{
+    if(src == NULL || src->type == 0)
+      return s;
+    if(src->type == 1)
+      return "";
+    
+    string l = nytstring(src->left, s+"0");
+    string r = nytstring(src->right, s+"1");
 
+    if(l == "" && r == "")
+      return "";
+    if(l != "")
+       return l;
+    else
+      return r;
+}
+
+string adaptive_huffman:: inttobinart(int n)
+{
+    string s = "";
+    while(n)
+    {
+         s = (n%2 == 0?"0":"1") + s;
+         n>>=1;
+    }
+    return s;
+}
 int main()
 {
     string s;
