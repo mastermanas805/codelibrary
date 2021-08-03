@@ -6,6 +6,8 @@ using namespace std;
 #define ss second
 #define mp make_pair
 #define pii pair<int,int>
+#define charcount 26
+int ptr = charcount ==26? ptr: 0;
 //Huffman code
 
 class node
@@ -36,70 +38,68 @@ public:
 class adaptive_huffman
 {
 
-    node *dfs(char c)
-    {
-        node *rt = this->root, *curr;
-        stack<node *> s;
-        s.push(rt);
-
-        while(!s.empty())
-        {
-            curr = s.top();
-            s.pop();
-            if(curr->type && curr->name == c)
-                return curr;
-            
-            if(curr->left != NULL)
-              s.push(curr->left);
-            if(curr->right != NULL)
-              s.push(curr->right);
-        }
-
-        return NULL;
-    }
-
     void gen_tree();
+    void decode();
     void update_value(node *src);
     void print_encoding();
     public:
     string s, *encode;
-    int flag[26] = {0};
+    int flag[charcount] = {0};
     node *root;
     vector<int> queue;
-    string nytflag[26];
+    string nytflag[charcount];
+    node *addr[charcount];
     string inttobinart(int n);
     string nytstring(node*, string);
+    int e,r; 
     
 
     adaptive_huffman(string s)
     {
         this->s = s;
         this->root = new node(0);
-        this->gen_tree();
+        this->e = log2(charcount); 
+        this->r = charcount - (1<<(e));
+        this->decode();
         this->print_encoding();
     }
 };
 
+
+void adaptive_huffman::decode()
+{
+    node *ptr = root;
+    int i=0, n = this->s.size();
+    for(int i =0; i<n; i++)
+    {
+        if(!ptr->type)
+        {
+            int j = -1, bit = 0;
+            while(++j<e) { if(s[++i] == '1') ++bit<<1; else bit<<1; }
+        }
+    }
+}
 
 void adaptive_huffman::gen_tree()
 {
     node *curr = root;
     for(auto i: this->s)
     {
-        if(flag[i-'a'] == 0)
+        if(flag[i-ptr] == 0)
           {
-                  this->nytflag[i-'a'] = this->nytstring(this->root, "");
-                  this->flag[i-'a'] = 1;
+                  this->nytflag[i-ptr] = this->nytstring(this->root, "");
+                  this->flag[i-ptr] = 1;
                   curr->type = 2;
                   curr->left = new node(0, NULL, curr, 0);
                   curr->right = new node(1, NULL, curr, 1, i);
+                  this->addr[i-ptr] = curr->right;
                   this->update_value(curr);
                   curr = curr->left->type != 1? curr->left: curr->right;
                   
           }
         else
          {
-             node *n = dfs(i);
+             node *n = this->addr[i-ptr];
              n->val++;
              this->update_value(n->root);
          }
@@ -108,33 +108,34 @@ void adaptive_huffman::gen_tree()
 
 void adaptive_huffman::print_encoding()
 {
+    this->encode = new string[this->s.size()];
     string s = this->s;
-    bool flag[26] = {0};
-    int e =4, r =10;
-
-    for(auto i: s)
+    bool flag[charcount] = {0};
+    
+    
+    for(int i = 0; i < s.size(); i++)
     {
-        if(!flag[i-'a'])
+        if(!flag[s[i]-ptr])
         {
-            flag[i-'a'] = 1;
-            if((i-'a'+1) >= 1 && (i-'a'+1) <= 2*r)
+            flag[s[i]-ptr] = 1;
+            if((s[i]-ptr+1) >= 1 && (s[i]-ptr+1) <= 2*r)
             {
-                string x = inttobinart(i-'a');
+                string x = inttobinart(s[i]-ptr);
                 while(x.length() < e+1) x = "0" + x;
-                cout<<i<<"\t"<<this->nytflag[i-'a']+x<<endl;
+                cout<<s[i]<<"\t"<<this->nytflag[s[i]-ptr]+x<<endl;
             }
 
-            else if((i - 'a' + 1)> 2*r)
+            else if((i - ptr + 1)> 2*r)
             {
-                string x = inttobinart(i-'a' - r );
+                string x = inttobinart(s[i]-ptr - r );
                 while(x.length() < e) x = "0" + x;
-                cout<<i<<"\t"<<this->nytflag[i-'a']+x<<endl;
+                cout<<s[i]<<"\t"<<this->nytflag[s[i]-ptr]+x<<endl;
             }
         }
 
         else
         {
-            cout<<i<<"\t"<<((this->nytflag[i-'a'] == "")?"1":this->nytflag[i-'a'])<<endl;
+            cout<<s[i]<<"\t"<<this->nytflag[s[i]-ptr] + "1"<<endl;
         }
     }
 }
@@ -187,7 +188,7 @@ string adaptive_huffman:: inttobinart(int n)
 int main()
 {
     string s;
-    cin>>s;
+    getline(cin, s);
     int n = s.size();
     if(!n)
       cout<<"Enter a valid string";

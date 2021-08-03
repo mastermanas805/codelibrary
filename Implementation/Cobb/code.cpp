@@ -15,25 +15,16 @@ int32_t main(){
     {
         int n,k,x;
         cin>>n>>k;
-        vector<pii> v;
-        for(int i=0;i<n;i++) { cin>>x; v.pb(mp(x,i+1)); }
-        vector<pair<int,int>> bitflag(log2(10e5)+1, mp(0,0));
-        for(auto i: v)
-        {
-            x = bitcount(i.ff);
-            if(i.ss > bitflag[x].ff) { bitflag[x].ss = bitflag[x].ff; bitflag[x].ff = i.ss;}
-            else if(i.ss > bitflag[x].ss) { bitflag[x].ss = i.ss;}
-        }
-    }
+        vector<int> v;
+        for(int i=0;i<n;i++) { cin>>x; v.pb(x); }
 
-    int ans = INT_MIN;
-    for(int i=0; i<32; i++)
-    {
-        ans = max(ans, bitflag[i].ff*bitflag[i].ss - k* );
-        for(int j=0; j<32; j++)
-          {
-
-          }
+        int start = max((int)0 ,n-201);
+        int ans = INT_MIN;
+        for(int i=start;i<n;i++)
+         for(int j=i+1;j<n;j++)
+            ans = max(ans, (i+1)*(j+1) - k*(v[i]|v[j]) );
+        
+        cout<<ans<<endl;
     }
     return 0;
 }
