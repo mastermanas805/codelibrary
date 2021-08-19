@@ -40,36 +40,44 @@ int main()
   while(end->next != NULL) end = end->next;
   quicksort(start, end);
   end = start;
-  while(end->next != NULL) {cout<<end->value<<"->"; end = end->next;}
+  while(end != NULL) {cout<<end->value<<"->"; end = end->next;}
 }
 
 void quicksort(LinkedList *l,LinkedList *h)
 {
-  if(l == NULL || h == NULL || l == h) return;
+  if(l == NULL || h == NULL || l == h || l == h->next) return;
 
   LinkedList *p = partition(l,h);
-  quicksort(l,p);
-  quicksort(p,h);
+  LinkedList *prev = l;
+  while(prev->next != p && prev !=p) prev=prev->next;
+  quicksort(l,prev);
+  quicksort(p->next,h);
 }
 
 LinkedList* partition(LinkedList *l, LinkedList *h)
 {
   if((l == NULL) || (h == NULL) || (l == h))  return l;
 
-  LinkedList *pivot = h, *cur = l, *pivot_prev = l;
-  cout<<(h == NULL);
-  while(cur!=h)
+  LinkedList  *cur = l, *pivot_prev = l;
+  int pivot = h->value;
+  
+  while(l!=h)
   {
-    if(cur->value < pivot->value) swap(cur,l);
-    cur = cur->next;
+    if(l->value < pivot) 
+    {
+      pivot_prev = cur;
+      swap(cur,l);
+      cur = cur->next;
+    }
+    l= l->next;
   }
-  if(cur->value > h->value) swap(cur,h);
+  swap(cur,h);
   return cur;
 }
 
 void swap(LinkedList *a, LinkedList *b)
 {
-  a->value+=b->value;
-  b->value= a->value - b->value;
-  a->value-=b->value;
+  int x = a->value;
+  a->value = b->value;
+  b->value = x;
 }
