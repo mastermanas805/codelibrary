@@ -1,3 +1,4 @@
+```html
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -145,3 +146,4 @@ and returns an integer&nbsp;as the answer:&nbsp;</p>
 	<li><em>F(L, R)</em> = 11&nbsp;+ 13&nbsp;= 24.&nbsp; It is maximum possible.</li>
 	<li>Therefore, the answer is <em>24</em>.</li>
 </ul></div></div><textarea class="text-area-to-copy"></textarea></div>
+```

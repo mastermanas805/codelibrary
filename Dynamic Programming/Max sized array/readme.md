@@ -1,3 +1,5 @@
+
+```html
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -82,3 +84,5 @@ integer denoting the maximum value of <em>N:</em></p>
 	<li>Similarly, if you calculate for&nbsp;<em>N = 3,</em>&nbsp;the sum equals 720&nbsp;which doesn't exceed S. Nor bigger value of&nbsp;<em>N</em> is possible.</li>
 	<li>Hence, the maximum value of <em>N</em> is 3.</li>
 </ul></div></div><textarea class="text-area-to-copy"></textarea>
+
+```
