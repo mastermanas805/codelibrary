@@ -14,7 +14,7 @@ public:
         
         
         string ans = "";
-        int sz = s.length(); Recursively remove all adjacent duplicates 
+        int sz = s.length(); //Recursively remove all adjacent duplicates 
         int i,j;
         i = j = 0;
         for(int i=0; i<sz; i++)
