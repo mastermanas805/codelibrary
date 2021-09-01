@@ -13,6 +13,7 @@ class Solution {
                             // corner cases ans.
         int minEle, maxEle; // these 2 variables will hold the
                             // between elements max and min value
+                            
         int result = arr[n - 1] - arr[0]; // current result when arr[0]
                                           // iss min and arr[n-1] is max
 
