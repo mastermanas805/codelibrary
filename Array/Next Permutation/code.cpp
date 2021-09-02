@@ -3,12 +3,6 @@ using namespace std;
 
 class Solution {
 public:
-    void swap(int &a, int &b)
-    {
-        a+=b,
-        b = a- b,
-        a = a - b;
-    }
     
     void nextPermutation(vector<int>& a) {
         int sz = a.size(),i = sz-2,j;
@@ -24,6 +18,13 @@ public:
             swap(a[i],a[j]);
             reverse(a.begin()+i+1, a.end());
        }
+    }
+
+    void swap(int &a, int &b)
+    {
+        a+=b,
+        b = a- b,
+        a = a - b;
     }
 };
 
