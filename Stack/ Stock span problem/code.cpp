@@ -25,9 +25,11 @@ class Solution
        int i=0;
        while(i<n)
        {
+           //if stack already empty in begening i=0
            if(s.empty()) {temp.pb(i), s.push(i), i++; continue;} 
            
            while(!s.empty() && price[s.top()]<=price[i]) s.pop();
+           //when stack becomes empty when finding leftmost greatest element
            if(s.empty()) temp.pb(0);
            else temp.pb(s.top()+1);
            s.push(i);
