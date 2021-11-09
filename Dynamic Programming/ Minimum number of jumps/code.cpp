@@ -29,6 +29,7 @@ class Solution{
                   for(int j=i+1;j<n && j<=i+arr[i]; j++)
                       if(mn > b[j] && b[j] != -1) mn = b[j],mn_index = j;
                   if(mn != INT_MAX) b[i] = 1 + b[mn_index];
+                  else b[i]= INT_MAX;
             }
         }
         
