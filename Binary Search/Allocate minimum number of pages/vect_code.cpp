@@ -46,7 +46,8 @@ int Solution::books(vector<int> &a, int m) {
     if(n < m) return -1;
         
     int l,r, mid, pages, x;
-    l = r = 0; //left and right
+    l = a[0];
+    r = 0; //left and right
     r = accumulate(a.begin(), a.end(), 0); //dertermining maximum number of pages a person can read
     
     
