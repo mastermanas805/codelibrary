@@ -1,3 +1,6 @@
+#include<bits/stdc++.h>
+using namespace std;
+
 class Solution {
 public:
     int rob(vector<int>& nums) {
@@ -22,3 +25,10 @@ public:
         return cur;
     }
 };
+
+int main()
+{
+    vector<int> v = {1,2,3,1};
+    Solution s;
+    s.rob(v);
+}
