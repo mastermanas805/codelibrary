@@ -1,25 +1,25 @@
-#include <bits/stdc++.h>
-using namespace std;
-
-double myPow(double x, int n) {
-        if (n == std::numeric_limits<int>::lowest()) {
-            return myPow(1 / x, -(n + 1)) / x;
+//  https://leetcode.com/problems/powx-n/
+class Solution {
+public:
+    double myPow(double x, int n) {
+        double ans = 1;
+        long long nn = n;
+        if(nn < 0) nn*=-1;
+        while(nn)
+        {
+            if(nn%2)
+            {
+                ans*=x;
+                nn-=1;
+            }
+            
+            else
+            {
+                x*=x;
+                nn/=2;
+            }
         }
-        if (n < 0) {
-            return myPow(1 / x, -n);
-        }
-    	double ans = 1;
-		while (n) {
-			if (n & 1 == 1) ans *= x;
-			x *= x;
-			n >>= 1;
-		}
-		return ans;
+        
+        return n>0?ans: 1/ans;
     }
-    
-int main()
-{
-    cout<<myPow(-13.62608, 3);
-
-    return 0;
-}
+};
