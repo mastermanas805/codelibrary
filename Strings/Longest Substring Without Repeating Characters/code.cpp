@@ -1,40 +1,26 @@
-#include<bits/stdc++.h>
-using namespace std;
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
+        int f[256], l = 0,h = 0, n = s.length(), mx = 1, cnt  = 0;
+        if(n == 0) return 0;
+        memset(f,-1,sizeof(f));
         
-        vector<bool> alpha(256,0);
-        int longest =0;
-        int front,rear;
-        front = rear = 0;
-
-        for(int i=0; i<s.size(); i++)
+        while(h<n)
         {
-            if(alpha[s[i]])
+            if(f[s[h]] < 0) f[s[h]] = h, h++, cnt++;
+            else
             {
-                longest = max(longest,rear - front);
-                while(s[i] != s[front])
+                while(l<f[s[h]]+1)
                 {
-                    alpha[s[front]] = 0;
-                    front++;
+                    f[s[l++]] = -1;
+                    cnt--;
                 }
-                
-                alpha[s[front]] = 0;
-                front++;
             }
-            rear++;
-            alpha[s[i]] = 1;
+            
+            mx = max(mx, cnt);
         }
         
-        longest = max(longest,rear - front);
-        return longest;
+        
+        return mx;
     }
 };
-
-int main()
-{
-    string s = "tmmzuxt";
-    Solution o;
-    o.lengthOfLongestSubstring(s);
-}
