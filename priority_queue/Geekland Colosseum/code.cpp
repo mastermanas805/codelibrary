@@ -1,7 +1,5 @@
-#include <vector>
-#include<queue>
-#include<iostream>
-#include <climits>
+#include<bits/stdc++.h>
+#include<limits.h>
 using namespace std;
 
 #define ll long long
@@ -55,7 +53,7 @@ public:
 };
 int main(){
     freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+    // freopen("output.txt", "w", stdout);
     int T;
     cin >> T;
     while(T--){
