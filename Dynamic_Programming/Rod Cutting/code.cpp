@@ -10,8 +10,8 @@ class Solution{
         int dp[n+1][n+1];
         for(int i=0;i<=n;i++) dp[i][0] = dp[0][i] = 0;
         
-        for(int i=1;i<=n;i++)
-            for(int j=1;j<=n;j++)
+        for(int i=1;i<=n;i++) //cut lentgth
+            for(int j=1;j<=n;j++) //rod length
                 if(i<=j)
                     dp[i][j] = max(dp[i-1][j], p[i-1] + dp[i][j-i]);
                 else
