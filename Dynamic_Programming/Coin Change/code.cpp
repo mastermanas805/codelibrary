@@ -43,3 +43,22 @@ int main()
     
     return 0;
 }  // } Driver Code Ends
+
+
+///Memoization 1D DP////////////////
+
+// https://leetcode.com/problems/coin-change/description/
+#define mx 10001
+class Solution {
+public:
+    int coinChange(vector<int> coins, int sum) {
+        int n = coins.size(), dp[sum+1];
+        memset(dp, mx, sizeof(dp));
+        dp[0] = 0;
+        for(int i=0;i<n;i++)
+            for(int j=coins[i];j<=sum;j++)
+                dp[j]= min(dp[j], 1 + dp[j-coins[i]]);
+                
+        return dp[sum] >= mx?-1:dp[sum];
+    }
+};
