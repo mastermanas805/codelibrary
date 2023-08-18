@@ -6,9 +6,10 @@
 !*/
 #Ignogre .vscode
 */.vscode
-# Ignore files with extension `.class` & `.sm`
+# Ignore files with extension `.class` `.sm` & `.out`
 *.class
 *.sm
+*.out
 # Ignore `bin` dir
 */bin/*
 #Ignore Executables
