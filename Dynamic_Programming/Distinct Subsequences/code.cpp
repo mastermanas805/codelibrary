@@ -2,7 +2,34 @@
 
 #include<iostream>
 using namespace std;
-class Solution {
+
+// Time Complexity: O(2^n)
+// Space Complexity: O(1)
+class RecursiveSolution {
+public:
+
+    int count(string s, string t, int i, int j){
+        if(j<0) return 1;
+
+        if(i<0) return 0;
+
+        if(s[i] == t[j])
+            return count(s,t,i-1,j-1) + count(s,t,i-1,j);
+        
+        return count(s,t,i-1,j);
+    }
+
+    int numDistinct(string s, string t) {
+        int m = s.length(), n = t.length();
+
+        return count(s,t,m-1,n-1);
+    }
+};
+
+
+// Time Complexity: O(m*n)
+// Space Complexity: O(m*n)
+class DPSolution {
 public:
     int numDistinct(string s, string t) {
         int m = s.length(), n = t.length();
