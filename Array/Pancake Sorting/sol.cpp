@@ -1,38 +1,38 @@
+#define mx 100001
 class Solution {
 public:
-    vector<int> pancakeSort(vector<int>& arr) {
-        vector<int> ret;
-        for (int i = arr.size(); i > 0; i--) {
-            int index = find(arr, i);
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        int n = grid.size();
+        if (grid[0][0] == 1 || grid[n - 1][n - 1] == 1) {
+            return -1; // If start or end is blocked, return -1
+        }
 
-            if (index == i - 1)
-                continue;
-            if (index > 0) {
-                ret.push_back(index + 1);
-                flip(arr, index + 1);
+        vector<vector<int>> directions = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1},
+                                          {0, 1},   {1, -1}, {1, 0},  {1, 1}};
+        queue<tuple<int, int, int>> q; // (x, y, distance)
+        q.push({0, 0, 1});
+        grid[0][0] = 1; // Mark as visited
+
+        while (!q.empty()) {
+            auto [x, y, dist] = q.front();
+            q.pop();
+
+            if (x == n - 1 && y == n - 1) {
+                return dist;
             }
 
-            ret.push_back(i);
-            flip(arr, i);
+            for (const auto& dir : directions) {
+                int nx = x + dir[0];
+                int ny = y + dir[1];
+
+                if (nx >= 0 && nx < n && ny >= 0 && ny < n &&
+                    grid[nx][ny] == 0) {
+                    q.push({nx, ny, dist + 1});
+                    grid[nx][ny] = 1; // Mark as visited
+                }
+            }
         }
 
-        return ret;
-    }
-
-    void flip(vector<int>& arr, int k) {
-        for (int i = 0; i < k / 2; i++) {
-            int x = arr[i];
-            arr[i] = arr[k - 1 - i];
-            arr[k - 1 - i] = x;
-        }
-    }
-
-    int find(vector<int>& arr, int val) {
-        for (int i = 0; i < arr.size(); i++) {
-            if (arr[i] == val)
-                return i;
-        }
-
-        return 0;
+        return -1;
     }
 };
