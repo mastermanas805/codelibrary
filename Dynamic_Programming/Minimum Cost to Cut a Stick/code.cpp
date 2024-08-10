@@ -29,23 +29,26 @@ class RecursiveSolution{
 
 //////////////////DP-2DArray////////////////////////////////////////////////////
 
-class MemoizationSolution{
-    
-    int minCost(int n, vector<int> cuts){
-        int c = cuts.size();
-        int dp[c+2][c+2];
-        memset(dp, 0, sizeof(dp));
-        for(int i=c;i>0;i--){
-            for(int j=1;j<c1;j++){
-                if(i>j) continue;
-                int mn = INT_MAX;
-                for(int ind=i; ind<=j; ind++){
-                    int ans = cuts[j+1] - cuts[i-1] + dp[i][ind-1] + dp[ind+1][j];
-                    mn = min(mn, ans);
+class Solution {
+public:
+    int dp[104][104];
+    int minCost(int n, vector<int>& cuts) {
+        sort(begin(cuts),end(cuts));
+        cuts.insert(cuts.begin(),0);
+        cuts.push_back(n);
+        memset(dp,0,sizeof(dp));
+
+
+        for(int l=cuts.size()-2;l>=0;l--){
+            for(int r=2;r<cuts.size();r++){
+                if(l+1>=r)continue;
+                int cur=INT_MAX;
+                for(int k=l+1;k<r;k++){
+                    cur=min(cur,dp[l][k]+dp[k][r]+cuts[r]-cuts[l]);
                 }
-                dp[i][j] = mn;
+                dp[l][r]=cur;
             }
         }
-        return dp[1][c];
+        return dp[0][cuts.size()-1];
     }
-}
+};
