@@ -22,64 +22,6 @@ Entities
     8. Seating Arrangement Strategy (Interface)
     9. MovieBookingService
 
-
-class Theater:
-    theater_id, name, city
-    screens: list[Screen]
-    
-    def add_screen(screen): # Admin functionality
-    def get_shows(date): # Returns shows playing at this theater
-
-class Movie:
-    movie_id, title, duration, language, genre
-
-class Seat:
-    seat_id, row, column, type (Enum: SILVER, GOLD, PLATINUM)
-    
-class PricingService:
-    def get_price(seat_type, show_time): 
-        # Returns price based on type and time (e.g., Morning vs Night)
-
-class Show:
-    show_id, movie, screen, start_time, end_time
-    show_seats: dict[seat_id, ShowSeat] # Tracks status for THIS specific timing
-
-    def get_available_seats():
-        return [s for s in show_seats if s.is_available()]
-
-class ShowSeat:
-    seat_metadata, status (AVAILABLE, LOCKED, BOOKED)
-    lock: ThreadLock
-
-    def reserve():
-        with lock:
-            if status == AVAILABLE:
-                status = LOCKED
-                return True
-            return False
-
-class Booking:
-    booking_id, user, show, selected_seats, total_amount, status
-    
-    def confirm_payment():
-        # Update status to CONFIRMED, trigger ticket generation
-
-interface SeatingStrategy:
-    def get_layout(show_id) # Returns spatial coordinates for UI
-    def suggest_best_seats(count) # Algorithm to find consecutive seats
-
-class MovieBookingService:
-    def search_movies(city, movie_name)
-    def select_show(show_id)
-    
-    def create_booking(user, show, seat_ids):
-        # 1. Attempt to lock ShowSeats (Atomicity)
-        # 2. If successful, create Booking object (Status: PENDING)
-        # 3. Start timer (e.g., 5 mins to pay)
-        # 4. On payment success -> update status to BOOKED
-        # 5. On failure/timeout -> release ShowSeats to AVAILABLE
-
-
 """
 
 import threading
@@ -105,17 +47,17 @@ class Seat:
         self.seat_type = seat_type
         self.price = price
 
+class Screen:
+    def __init__(self, screen_id: str, seats: List[Seat]):
+        self.screen_id = screen_id
+        self.seats = seats
+
 class Theater:
     def __init__(self, theater_id: str, name: str, city: str):
         self.theater_id = theater_id
         self.name = name
         self.city = city
-        self.screens: List['Screen'] = []
-
-class Screen:
-    def __init__(self, screen_id: str, seats: List[Seat]):
-        self.screen_id = screen_id
-        self.seats = seats
+        self.screens: List[Screen] = []
 
 # 3. Show and Seat Availability Management
 class ShowSeat:
