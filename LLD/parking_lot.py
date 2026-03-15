@@ -90,12 +90,12 @@ class ParkingLotSystem:
             del self.tickets[ticket.id]
             # Fee calculation happens here in the workflow
             ticket.exitAt = time.time()
-            self._calculate_fee(ticket, ticket.exitAt)
+            self._calculate_fee(ticket)
             print(f"Vehicle unparked successfully from spot {ticket.spot.id}")
 
-    def _calculate_fee(self, ticket: Ticket, exit_time: float):
+    def _calculate_fee(self, ticket: Ticket):
         # Time Ticker Logic: 1 second of real time = 1 hour of parking time
-        duration_seconds = exit_time - ticket.createdAt
+        duration_seconds = ticket.exitAt - ticket.createdAt
         simulated_hours = max(1, int(duration_seconds * 10)) # Multiplier for demo
         
         rate = {
