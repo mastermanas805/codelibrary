@@ -1,10 +1,9 @@
+import threading
+import time
 from enum import Enum
 from abc import ABC, abstractmethod
 from typing import Optional
-import threading
-import time
 
-# 1. Added Truck to fulfill requirements and fixed typo
 class VehicleSize(Enum):
     TWO_WHEELER = 1
     FOUR_WHEELER = 2
@@ -40,6 +39,7 @@ class Ticket:
         self.id = id
         self.spot = spot
         self.createdAt = createdAt
+        self.exitAt = int
 
 class Request:
     def __init__(self, vehicle: Vehicle):
@@ -67,17 +67,17 @@ class ParkingLotSystem:
         self.lock = threading.Lock()
 
     def park_vehicle(self, request: Request) -> Optional[Ticket]:
-        # Lock to ensure concurrent requests don't get the same spot
         with self.lock:
             spot = self.strategy.findSpot(request=request, floors=self.floors)
             if not spot:
-                print("No Parking Spot Available")
+                print(f"No Parking Spot Available for {request.vehicle.license_plate}")
                 return None
             
             spot.park_vehicle()
             ticket = Ticket(self.tkt_counter, spot, time.time())
             self.tickets[self.tkt_counter] = ticket
             self.tkt_counter += 1
+            print(f"Vehicle {request.vehicle.license_plate} parked at Spot {spot.id}")
             return ticket
     
     def unpark_vehicle(self, ticket: Ticket):
@@ -88,4 +88,51 @@ class ParkingLotSystem:
             
             ticket.spot.unpark_vehicle()
             del self.tickets[ticket.id]
+            # Fee calculation happens here in the workflow
+            ticket.exitAt = time.time()
+            self._calculate_fee(ticket, ticket.exitAt)
             print(f"Vehicle unparked successfully from spot {ticket.spot.id}")
+
+    def _calculate_fee(self, ticket: Ticket, exit_time: float):
+        # Time Ticker Logic: 1 second of real time = 1 hour of parking time
+        duration_seconds = exit_time - ticket.createdAt
+        simulated_hours = max(1, int(duration_seconds * 10)) # Multiplier for demo
+        
+        rate = {
+            VehicleSize.TWO_WHEELER: 10,
+            VehicleSize.FOUR_WHEELER: 20,
+            VehicleSize.TRUCK: 50
+        }[ticket.spot.vehicleSize]
+        
+        total_fee = simulated_hours * rate
+        print(f"--- Receipt | Ticket ID: {ticket.id} | Duration: {simulated_hours} hrs | Total Fee: ${total_fee} ---")
+
+# --- MAIN EXECUTION BLOCK ---
+
+if __name__ == "__main__":
+    # 1. Setup Spots and Floors
+    spots_f1 = [ParkingSpot(101, VehicleSize.TWO_WHEELER), ParkingSpot(102, VehicleSize.FOUR_WHEELER)]
+    spots_f2 = [ParkingSpot(201, VehicleSize.TRUCK)]
+    
+    floor1 = ParkingFloor(1, spots_f1)
+    floor2 = ParkingFloor(2, spots_f2)
+    
+    # 2. Initialize System
+    strategy = DefaultFindSpotStrategy()
+    parking_system = ParkingLotSystem([floor1, floor2], strategy)
+    
+    # 3. Simulate Parking
+    v1 = Vehicle(VehicleSize.FOUR_WHEELER, "ABC-123")
+    v2 = Vehicle(VehicleSize.TRUCK, "TRK-999")
+    
+    tkt1 = parking_system.park_vehicle(Request(v1))
+    tkt2 = parking_system.park_vehicle(Request(v2))
+    
+    print("\n... Vehicles are parked. Simulating time passage ...\n")
+    time.sleep(2) # Wait 2 seconds
+    
+    # 4. Simulate Unparking
+    if tkt1:
+        parking_system.unpark_vehicle(tkt1)
+    if tkt2:
+        parking_system.unpark_vehicle(tkt2)
