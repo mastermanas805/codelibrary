@@ -27,8 +27,7 @@ Entities
 import threading
 import time
 from enum import Enum
-from abc import ABC, abstractmethod
-from typing import List, Dict, Optional
+from typing import List, Optional
 
 # 1. Enums for Types and Status
 class SeatType(Enum):
