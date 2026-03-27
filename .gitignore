@@ -1,20 +1,53 @@
-# Ignore all
-*
-# Unignore all with extensions
-!*.*
-# Unignore all dirs
-!*/
-#Ignogre .vscode
-*/.vscode
-# Ignore files with extension `.class` `.sm` & `.out`
+# Mac OS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+dist/
+build/
+
+# Java
+target/
 *.class
-*.sm
-*.out
-# Ignore `bin` dir
-*/bin/*
-#Ignore Executables
-**/*
-!**/
-!**/*.*
-.vscode
-.devcontainer
+*.jar
+*.war
+*.ear
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+venv/
+env/
+
+# Go
+bin/
+pkg/
+
+# Compiled object files
+*.o
+*.obj
+
+# Logs
+logs/
+*.log
+
+# Docker
+docker-compose.override.yml
+
+# macOS Debug Symbols
+*.dSYM/
+**code
+**bySize
+**code1
